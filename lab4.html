@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+        "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="1000px" height="800px"
+     viewBox="0 0 400 400"
+     preserveAspectRatio="xMidYMid">
+
+
+    <defs>
+
+        <g id="Figure">
+
+            <polygon fill="none" stroke="black", stroke-width="2"
+                    points="177.97464868072487,134.08662784207147 162.74303669726424,157.78747871771293 137.11574191366427,169.49107209404664 109.22924934990569,165.48159976772592 87.93732335844095,147.03204087277987 80,120.00000000000003 87.93732335844095,92.96795912722013 109.22924934990569,74.51840023227408 137.11574191366424,70.50892790595336 162.74303669726424,82.21252128228707 177.97464868072484,105.91337215792846">
+            <animateTransform attributeName="transform" type="rotate" from="0 130 120" to="360 130 120" dur="5s"
+                              repeatCount="indefinite" />
+            </polygon>
+
+            <polygon fill="none" stroke="black", stroke-width="2"
+                     points="372.9746486807249,174.08662784207147 357.74303669726424,197.78747871771293 332.1157419136643,209.49107209404664 304.2292493499057,205.48159976772592 282.93732335844095,187.03204087277987 275,160.00000000000003 282.93732335844095,132.96795912722013 304.2292493499057,114.51840023227408 332.11574191366424,110.50892790595336 357.74303669726424,122.21252128228707 372.97464868072484,145.91337215792848">
+                <animateTransform attributeName="transform" type="rotate" from="0 325 160" to="360 325 160" dur="5s"
+                                  repeatCount="indefinite" />
+            </polygon>
+
+            <rect x="160" y="80" width="200" height="16" fill="red" transform="rotate(13)" />
+
+        </g>
+
+        <g id="triangle">
+            <polygon points = "230,150 180,360 280,360" />
+        </g>
+
+    </defs>
+
+    <use xlink:href="#Figure" transform="scale(0.3,0.3) translate(-100, -40)" />
+    <use xlink:href="#triangle" fill="purple" transform="scale(0.3,0.3) translate(-100,-40)" />
+
+    <use xlink:href="#Figure" transform="scale(0.45,0.45) translate(100, 100)" />
+    <use xlink:href="#triangle" fill="blue" transform="scale(0.45,0.45) translate(100,100)" />
+
+    <use xlink:href="#Figure" transform="scale(0.25,0.25) translate(900, 50)" />
+    <use xlink:href="#triangle" fill="green" transform="scale(0.25,0.25) translate(900,50)" />
+
+
+
+
+</svg>
