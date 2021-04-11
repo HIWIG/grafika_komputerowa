@@ -43,19 +43,75 @@ public class SceneGraph extends JPanel {
 	private CompoundObject world; // SceneGraphNode representing the entire scene.
 
 	// TODO: Define global variables to represent animated objects in the scene.
-	private TransformedObject rotatingRect;  // (DELETE THIS EXAMPLE)
+	//private TransformedObject rotatingRect;  // (DELETE THIS EXAMPLE)
+	private TransformedObject rec1, rec2, rec3;
+	private TransformedObject tr1, tr2, tr3;
+	private TransformedObject pol1, pol2, pol3, pol4, pol5, pol6;
+
+
+
 
 	/**
-	 *  Builds the data structure that represents the entire picture. 
+	 *  Builds the data structure that represents the entire picture.
 	 */
 	private void createWorld() {
 
+
+
 		world = new CompoundObject();  // Root node for the scene graph.
 
-		// TODO: Create objects and add them to the scene graph.
-		rotatingRect = new TransformedObject(filledRect);   // (DELETE THIS EXAMPLE)
-		rotatingRect.setScale(2,2).setColor(Color.RED); 
-		world.add(rotatingRect);
+		rec1=new TransformedObject(filledRect);
+		tr1=new TransformedObject(filledTriangle);
+		pol1=new TransformedObject(polygon);
+		pol2=new TransformedObject(polygon);
+
+		tr1.setTranslation(-2.2,0.3).setScale(0.6,1.6).setColor(new Color(153, 51, 153));
+		rec1.setTranslation(-2.2,1.9).setScale(2.2,0.2).setRotation(-16).setColor(Color.red);
+		pol1.setScale(0.0036,0.0036).setTranslation(-3.27,2.2);
+		pol2.setScale(0.0036,0.0036).setTranslation(-1.16,1.6);
+
+
+		world.add(pol1);
+		world.add(pol2);
+		world.add(rec1);
+		world.add(tr1);
+
+
+		pol3=new TransformedObject(polygon);
+		pol4=new TransformedObject(polygon);
+		rec2=new TransformedObject(filledRect);
+		tr2=new TransformedObject(filledTriangle);
+
+		tr2.setTranslation(0.3,-2.8).setScale(0.8,2).setColor(Color.blue);
+		rec2.setTranslation(0.3,-0.8).setScale(2.9,0.25).setRotation(-16).setColor(Color.red);
+		pol3.setScale(0.004,0.004).setTranslation(-1.1,-0.4);
+		pol4.setScale(0.004,0.004).setTranslation(1.67,-1.2);
+
+
+		world.add(pol3);
+		world.add(pol4);
+		world.add(rec2);
+		world.add(tr2);
+
+
+
+		rec3=new TransformedObject(filledRect);
+		tr3=new TransformedObject(filledTriangle);
+		pol5=new TransformedObject(polygon);
+		pol6=new TransformedObject(polygon);
+
+
+		tr3.setTranslation(2,0.5).setScale(0.6,1.5).setColor(new Color(51, 153, 51));
+		rec3.setTranslation(2,2).setScale(1.6,0.15).setRotation(-16).setColor(Color.red);
+		pol5.setScale(0.002,0.002).setTranslation(1.2,2.2);
+		pol6.setScale(0.002,0.002).setTranslation(2.73,1.76);
+
+
+		world.add(pol5);
+		world.add(pol6);
+		world.add(rec3);
+		world.add(tr3);
+
 
 	} // end createWorld()
 
@@ -68,8 +124,13 @@ public class SceneGraph extends JPanel {
 		frameNumber++;
 
 		// TODO: Update state in preparation for drawing the next frame.
-		rotatingRect.setRotation(frameNumber*0.75); // (DELETE THIS EXAMPLE)
-
+		//rotatingRect.setRotation(frameNumber*0.75); // (DELETE THIS EXAMPLE)
+			pol1.setRotation(frameNumber*0.75);
+			pol2.setRotation(frameNumber*0.75);
+			pol3.setRotation(frameNumber*0.75);
+			pol4.setRotation(frameNumber*0.75);
+			pol5.setRotation(frameNumber*0.75);
+			pol6.setRotation(frameNumber*0.75);
 	}
 
 
@@ -96,7 +157,7 @@ public class SceneGraph extends JPanel {
 		}
 		abstract void doDraw(Graphics2D g);
 	}
-	
+
 	/**
 	 *  Defines a subclass, CompoundObject, of SceneGraphNode to represent
 	 *  an object that is made up of sub-objects.  Initially, there are no
@@ -159,10 +220,10 @@ public class SceneGraph extends JPanel {
 			g.setTransform(savedTransform);
 		}
 	}
-	
+
 	       // Create some basic objects as custom SceneGraphNodes.
 
-	private static SceneGraphNode line = new SceneGraphNode() { 
+	private static SceneGraphNode line = new SceneGraphNode() {
 		void doDraw(Graphics2D g) {  g.draw( new Line2D.Double( -0.5,0, 0.5,0) ); }
 	};
 
@@ -193,6 +254,20 @@ public class SceneGraph extends JPanel {
 		}
 	};
 
+	private static SceneGraphNode polygon = new SceneGraphNode() {
+		void doDraw(Graphics2D g) {
+			g.setColor(Color.black);
+			g.setStroke(new BasicStroke(8));
+			Polygon pol = new Polygon();
+			for (int i = 0; i < 11; i++)
+				pol.addPoint(
+						(int) (150 * Math.cos(i * 2 * Math.PI / 11)), (int) (150 * Math.sin(i * 2 * Math.PI / 11))
+				);
+
+			g.drawPolygon(pol);
+		}
+
+	};
 
 
 	//--------------------------------- Implementation ------------------------------------
@@ -267,7 +342,7 @@ public class SceneGraph extends JPanel {
 	 * viewport.  Note that when preserveAspect is false, the units of measure in the horizontal and
 	 * vertical directions will be different.
 	 */
-	private void applyLimits(Graphics2D g2, double xleft, double xright, 
+	private void applyLimits(Graphics2D g2, double xleft, double xright,
 			double ytop, double ybottom, boolean preserveAspect) {
 		int width = display.getWidth();   // The width of the drawing area, in pixels.
 		int height = display.getHeight(); // The height of the drawing area, in pixels.
