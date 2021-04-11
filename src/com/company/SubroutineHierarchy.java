@@ -1,7 +1,7 @@
 package gk.lab3;
 
 
-import org.w3c.dom.css.Rect;
+import com.company.SceneGraph;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -52,12 +52,30 @@ public class SubroutineHierarchy extends JPanel {
 
 		// TODO: Draw the content of the scene.
 		//rotatingRect(g2);  // (DELETE THIS EXAMPLE)
+		Poly(g2,-1100,730,0.003,0.003,Color.BLACK);
+		Poly(g2,-350,390,0.003,0.003,Color.BLACK);
+		Triangle(g2,-3.9,0.1,0.6,1.6,new Color(153, 51, 153));
+		Rectangle(g2,-2.2,1.7,2.5,0.2,Color.red,9);
+
+		Poly(g2,-255,-100,0.0033,0.0033,Color.BLACK);
+		Poly(g2,430,-400,0.0033,0.0033,Color.BLACK);
+		Rectangle(g2,0.3,-0.8,2.5,0.2,Color.red,9);
+		Triangle(g2,0.3,-1.4,0.9,2,Color.blue);
+
+
+		Poly(g2,345,990,0.0025,0.0025,Color.BLACK);
+		Poly(g2,1060,690,0.0025,0.0025,Color.BLACK);
+		Rectangle(g2,1.8,2.1,2,0.16,Color.red,9);
+		Triangle(g2,4.5,0.7,0.4,1.2,new Color(51, 153, 51));
+
+
+
 
 
 
 	} // end drawWorld()
-	
-	
+
+
 	/**
 	 * This method is called before each frame is drawn.
 	 */
@@ -66,9 +84,9 @@ public class SubroutineHierarchy extends JPanel {
 		// TODO: If other updates are needed for the next frame, do them here.
 	}
 
-    
+
 	// TODO: Define methods for drawing objects in the scene.
-	
+
 	private void rotatingRect(Graphics2D g2) { // (DELETE THIS EXAMPLE)
 		AffineTransform saveTransform = g2.getTransform();  // (It might be necessary to save/restore transform and color)
 		Color saveColor = g2.getColor();
@@ -80,43 +98,45 @@ public class SubroutineHierarchy extends JPanel {
 		g2.setTransform(saveTransform);
 	}
 
-	private void Triangle(Graphics2D g2){
-		AffineTransform saveTransform = g2.getTransform();
+	private void Triangle(Graphics2D g2, double posx, double posy, double scalex, double scaley, Color col)
+	{
+		AffineTransform saveTransform = g2.getTransform();  // (It might be necessary to save/restore transform and color)
 		Color saveColor = g2.getColor();
-		g2.setColor( Color.RED );
-		g2.rotate( Math.toRadians( frameNumber*0.75 ));
-		g2.scale( 2, 2 );
+		g2.scale( scalex, scaley );
+		g2.translate(posx, posy);
+		g2.setColor( col );
+		filledTriangle(g2);
+		g2.setColor(saveColor);
+		g2.setTransform(saveTransform);
+	}
+	private void Rectangle(Graphics2D g2, double posx, double posy, double scalex, double scaley, Color col,double rot)
+	{
+		AffineTransform saveTransform = g2.getTransform();  // (It might be necessary to save/restore transform and color)
+		Color saveColor = g2.getColor();
+		g2.setColor( col );
+		g2.translate(posx, posy);
+		g2.rotate(rot);
+		g2.scale( scalex, scaley );
 		filledRect(g2);
 		g2.setColor(saveColor);
 		g2.setTransform(saveTransform);
 	}
-
-	private void Rectangle(Graphics2D g2){
-		AffineTransform saveTransform = g2.getTransform();
+	private void Poly(Graphics2D g2, double posx, double posy, double scalex, double scaley, Color col)
+	{
+		AffineTransform saveTransform = g2.getTransform();  // (It might be necessary to save/restore transform and color)
 		Color saveColor = g2.getColor();
-		g2.setColor( Color.RED );
+		g2.scale( scalex, scaley );
+		g2.translate(posx, posy);
+		g2.setColor( col );
 		g2.rotate( Math.toRadians( frameNumber*0.75 ));
-		g2.scale( 2, 2 );
-		filledRect(g2);
+		polygon(g2);
 		g2.setColor(saveColor);
 		g2.setTransform(saveTransform);
 	}
-
-	private void Poly(Graphics2D g2){
-		AffineTransform saveTransform = g2.getTransform();
-		Color saveColor = g2.getColor();
-		g2.setColor( Color.RED );
-		g2.rotate( Math.toRadians( frameNumber*0.75 ));
-		g2.scale( 2, 2 );
-		filledRect(g2);
-		g2.setColor(saveColor);
-		g2.setTransform(saveTransform);
-	}
-
 
 
 	//------------------- Some methods for drawing basic shapes. ----------------
-	
+
 	private static void line(Graphics2D g2) { // Draws a line from (-0.5,0) to (0.5,0)
 		g2.draw( new Line2D.Double( -0.5,0, 0.5,0) );
 	}
@@ -136,15 +156,30 @@ public class SubroutineHierarchy extends JPanel {
 	private static void filledCircle(Graphics2D g2) { // Fills a circle, diameter = 1, center = (0,0)
 		g2.draw(new Ellipse2D.Double(-0.5,-0.5,1,1));
 	}
-	
+
 	private static void filledTriangle(Graphics2D g2) { // width = 1, height = 1, center of base is at (0,0);
-		Path2D path = new Path2D.Double();  
+		Path2D path = new Path2D.Double();
 		path.moveTo(-0.5,0);
 		path.lineTo(0.5,0);
 		path.lineTo(0,1);
 		path.closePath();
 		g2.fill(path);
 	}
+
+	private static void polygon(Graphics2D g)
+	{
+			g.setColor(Color.black);
+			g.setStroke(new BasicStroke(8));
+			Polygon pol = new Polygon();
+			for (int i = 0; i < 11; i++)
+				pol.addPoint(
+						(int) (150 * Math.cos(i * 2 * Math.PI / 11)), (int) (150 * Math.sin(i * 2 * Math.PI / 11))
+				);
+
+			g.drawPolygon(pol);
+	}
+
+
 
 
 
@@ -202,10 +237,10 @@ public class SubroutineHierarchy extends JPanel {
 
 
 	/**
-	 * Applies a coordinate transform to a Graphics2D graphics context.  The upper left corner of 
+	 * Applies a coordinate transform to a Graphics2D graphics context.  The upper left corner of
 	 * the viewport where the graphics context draws is assumed to be (0,0).  The coordinate
 	 * transform will make a requested rectangle visible in the drawing area.  The requested
-	 * limits might be adjusted to preserve the aspect ratio.  (This method sets the global variable 
+	 * limits might be adjusted to preserve the aspect ratio.  (This method sets the global variable
 	 * pixelSize to be equal to the size of one pixel in the transformed coordinate system.)
 	 * @param g2 The drawing context whose transform will be set.
 	 * @param xleft requested x-value at left of drawing area.
@@ -219,8 +254,8 @@ public class SubroutineHierarchy extends JPanel {
 	 * viewport.  Note that when preserveAspect is false, the units of measure in the horizontal and
 	 * vertical directions will be different.
 	 */
-	private void applyLimits(Graphics2D g2, double xleft, double xright, 
-			double ytop, double ybottom, boolean preserveAspect) {
+	private void applyLimits(Graphics2D g2, double xleft, double xright,
+							 double ytop, double ybottom, boolean preserveAspect) {
 		int width = display.getWidth();   // The width of the drawing area, in pixels.
 		int height = display.getHeight(); // The height of the drawing area, in pixels.
 		if (preserveAspect) {
